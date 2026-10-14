@@ -198,25 +198,25 @@
     <section class="adm-panel" id="tab-notify" hidden>
       <div class="adm-section-title">
         <h2>Уведомления о заявках</h2>
-        <p>Когда клиент оставляет заявку на сайте, вам сразу приходит сообщение в Telegram — со звуком и пуш-уведомлением на телефон.</p>
+        <p>Когда клиент оставляет заявку на сайте, сообщение в Telegram приходит сразу всем подключённым получателям — со звуком и пуш-уведомлением на телефон. Можно подключить несколько человек: и вас, и мастера.</p>
       </div>
 
       <div class="adm-card">
         <h3>Подключение Telegram</h3>
         <ol class="steps">
-          <li>Откройте Telegram и найдите бота <b>@BotFather</b>.</li>
-          <li>Отправьте ему команду <code>/newbot</code> и ответьте на вопросы. В конце он пришлёт <b>токен</b> — длинную строку из цифр и букв.</li>
-          <li>Откройте вашего нового бота (ссылка вида <code>t.me/имя_бота</code>) и нажмите <b>Start</b>, затем отправьте ему любое сообщение (например, «привет»).</li>
-          <li>Скопируйте токен в поле ниже и нажмите <b>«Подключить»</b>.</li>
+          <li>Токен бота от <b>@BotFather</b> уже сохранён (если поле пустое — получите токен у @BotFather командой <code>/newbot</code>).</li>
+          <li>Каждый, кто должен получать заявки, открывает бота (ссылка вида <code>t.me/имя_бота</code>), нажимает <b>Start</b> и пишет ему любое сообщение, например «привет».</li>
+          <li>Нажмите <b>«Добавить получателя»</b> — бот подключит того, кто написал последним. Чтобы добавить второго — пусть он тоже напишет боту, и нажмите кнопку ещё раз.</li>
         </ol>
         <div class="field"><label>Токен бота от @BotFather</label><input id="tgToken" placeholder="123456789:AA..." autocomplete="off"></div>
         <div class="btns">
-          <button class="btn btn-primary" id="tgConnect" type="button">Подключить</button>
+          <button class="btn btn-primary" id="tgConnect" type="button">Добавить получателя</button>
           <button class="btn btn-ghost" id="tgTest" type="button">Отправить тест</button>
           <button class="btn btn-ghost" id="tgToggle" type="button">Выключить</button>
         </div>
         <p class="adm-note ok" id="tgMsg" hidden></p>
         <p class="adm-note" id="tgStatus"></p>
+        <div class="tg-chats" id="tgChats"></div>
       </div>
 
       <div class="adm-card">

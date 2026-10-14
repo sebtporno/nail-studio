@@ -58,6 +58,13 @@ code{background:var(--violet-tint);border-radius:6px;padding:2px 7px;font-size:1
 .adm-card h3{font-size:19px;margin-bottom:6px}
 .adm-note{color:var(--muted);font-size:13.5px;margin:8px 0 14px}
 .adm-note.ok{color:#2f7d4f;font-weight:600}
+.tg-chats{margin-top:6px}
+.tg-chats-title{color:var(--muted);font-size:13.5px;margin:10px 0 6px}
+.tg-chats-list{display:flex;flex-wrap:wrap;gap:8px}
+.tg-chat{display:inline-flex;align-items:center;gap:8px;background:#f3effa;border:1px solid #e3daf3;border-radius:999px;padding:5px 6px 5px 12px;font-size:13.5px}
+.tg-chat b{font-weight:600}
+.tg-x{border:0;background:#e3daf3;color:#6b4fa0;border-radius:50%;width:22px;height:22px;line-height:1;cursor:pointer;font-size:15px}
+.tg-x:hover{background:#d6c7ef}
 
 .grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px 18px}
 .field{margin-top:14px}

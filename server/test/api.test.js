@@ -23,6 +23,9 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const UPLOADS = path.resolve(__dirname, "..", "uploads");
 
 const { app, init, closeDb } = await import("../src/server.js");
+// server.js подгружает server/.env — обнуляем, чтобы в тестах не было реальных получателей
+delete process.env.TELEGRAM_BOT_TOKEN;
+delete process.env.TELEGRAM_CHAT_ID;
 
 let server;
 let base = "";
@@ -271,6 +274,7 @@ test("уведомления: подключение бота находит ч�
   assert.equal(status.telegram.configured, true);
   assert.equal(status.telegram.enabled, true);
   assert.equal(status.telegram.chatId, "777001");
+  assert.deepEqual(status.telegram.chatIds, ["777001"]);
   assert.ok(status.telegram.token.includes("•"), "токен маскируется");
   assert.ok(!status.telegram.token.includes("TEST-TOKEN"), "токен не отдаётся целиком");
 });
@@ -365,4 +369,37 @@ test("уведомления: выключенные уведомления не
     method: "PUT", headers: Object.assign({ "Content-Type": "application/json" }, auth()),
     body: JSON.stringify({ enabled: true }),
   });
+
+  // токен не должен «портиться» от выключения и включения
+  tgCalls.length = 0;
+  await fetch(base + "/api/admin/notify/test", { method: "POST", headers: auth() });
+  const after = tgCalls.find((c) => c.method === "sendMessage");
+  assert.ok(after && after.url.includes("TEST-TOKEN"), "токен сохранился после выключения и включения");
+});
+
+test("уведомления: можно добавить второго получателя и слать обоим", async () => {
+  tgUpdates = { ok: true, result: [{ update_id: 3, message: { message_id: 3, chat: { id: 777002, first_name: "Валентина", type: "private" }, text: "привет" } }] };
+  const r = await connect("");
+  assert.equal(r.status, 200);
+  const d = await j(r);
+  assert.equal(d.ok, true);
+  assert.deepEqual(d.chatIds.slice().sort(), ["777001", "777002"]);
+
+  const status = await j(await fetch(base + "/api/admin/notify", { headers: auth() }));
+  assert.deepEqual(status.telegram.chatIds.slice().sort(), ["777001", "777002"]);
+  assert.equal(status.telegram.configured, true);
+
+  tgCalls.length = 0;
+  const t = await fetch(base + "/api/admin/notify/test", { method: "POST", headers: auth() });
+  assert.equal((await j(t)).ok, true);
+  const sent = tgCalls.filter((c) => c.method === "sendMessage").map((c) => String(c.payload.chat_id));
+  assert.ok(sent.includes("777001") && sent.includes("777002"), "сообщение ушло обоим получателям");
+});
+
+test("уведомления: получателя можно убрать", async () => {
+  const r = await fetch(base + "/api/admin/notify/chats/777002", { method: "DELETE", headers: auth() });
+  assert.equal(r.status, 200);
+  const d = await j(r);
+  assert.deepEqual(d.telegram.chatIds, ["777001"]);
+  assert.equal(d.telegram.chatId, "777001");
 });

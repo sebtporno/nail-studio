@@ -13,7 +13,7 @@ import { initDb, closeDb, query } from "./db.js";
 import { ensureAdminUser, requireAuth, hashPassword, verifyPassword, signToken } from "./auth.js";
 import { seedIfEmpty, loadData, replaceData } from "./seed.js";
 import {
-  getNotifySettings, setNotifySettings, maskToken,
+  getNotifySettings, setNotifySettings, maskToken, addNotifyChat, removeNotifyChat,
   notifyNewBooking, sendTelegramMessage, findTelegramChat, telegramCall,
 } from "./notify.js";
 
@@ -179,12 +179,13 @@ app.delete("/api/admin/bookings/:id", requireAuth, async (req, res, next) => {
 
 async function notifyStatus() {
   const cfg = await getNotifySettings();
-  const { token, chatId, enabled } = cfg.telegram;
+  const { token, chatId, chatIds, enabled } = cfg.telegram;
   return {
-    configured: Boolean(token && chatId),
+    configured: Boolean(token && chatIds.length),
     enabled,
     token: token ? maskToken(token) : "",
     chatId: chatId || "",
+    chatIds: chatIds || [],
   };
 }
 
@@ -192,16 +193,24 @@ app.get("/api/admin/notify", requireAuth, async (req, res, next) => {
   try { res.json({ telegram: await notifyStatus() }); } catch (e) { next(e); }
 });
 
-// Сохранить настройки (включить/выключить, задать chat_id)
+// Сохранить настройки (включить/выключить, список получателей)
 app.put("/api/admin/notify", requireAuth, async (req, res, next) => {
   try {
     const b = req.body || {};
-    await setNotifySettings({ token: b.token, chatId: b.chatId, enabled: b.enabled });
+    await setNotifySettings({ token: b.token, chatIds: b.chatIds, chatId: b.chatId, enabled: b.enabled });
     res.json({ ok: true, telegram: await notifyStatus() });
   } catch (e) { next(e); }
 });
 
-// Подключить бота: проверить токен и найти chat_id по сообщению мастеру
+// Убрать получателя
+app.delete("/api/admin/notify/chats/:chatId", requireAuth, async (req, res, next) => {
+  try {
+    await removeNotifyChat(req.params.chatId);
+    res.json({ ok: true, telegram: await notifyStatus() });
+  } catch (e) { next(e); }
+});
+
+// Подключить получателя: проверить токен и найти chat_id по последнему сообщению боту
 app.post("/api/admin/notify/connect", requireAuth, async (req, res, next) => {
   try {
     const b = req.body || {};
@@ -216,7 +225,7 @@ app.post("/api/admin/notify/connect", requireAuth, async (req, res, next) => {
       return res.json({ ok: false, message: "Токен не подошёл. Скопируйте его из @BotFather целиком." });
     }
 
-    // 2) Ищем чат, куда писать (мастер должен был написать боту)
+    // 2) Ищем чат, который написал боту (человек должен нажать Start)
     let chat = null;
     try { chat = await findTelegramChat(token); }
     catch (e) { return res.json({ ok: false, message: e.message || "Не удалось получить сообщения бота" }); }
@@ -227,21 +236,32 @@ app.post("/api/admin/notify/connect", requireAuth, async (req, res, next) => {
       return res.json({ ok: false, message: "Бот пока не получал сообщений. Откройте @" + (me.data.result.username || "бота") + " в Telegram, нажмите Start, напишите ему «привет» — и нажмите «Подключить» снова." });
     }
 
-    await setNotifySettings({ token, chatId: String(chat.id), enabled: true });
+    const before = (await getNotifySettings()).telegram.chatIds;
+    const id = String(chat.id);
+    const already = before.indexOf(id) !== -1;
+    await addNotifyChat(id);
+    await setNotifySettings({ token, enabled: true });
     const chatName = chat.title || [chat.first_name, chat.last_name].filter(Boolean).join(" ") || chat.username || "чат";
-    res.json({ ok: true, chatName, chatId: String(chat.id) });
+    res.json({
+      ok: true,
+      chatName,
+      chatId: id,
+      chatIds: (await getNotifySettings()).telegram.chatIds,
+      already,
+      message: already ? ("Чат «" + chatName + "» уже подключён") : ("Чат «" + chatName + "» подключён ✓"),
+    });
   } catch (e) { next(e); }
 });
 
-// Тестовое сообщение
+// Тестовое сообщение всем получателям
 app.post("/api/admin/notify/test", requireAuth, async (req, res, next) => {
   try {
     const cfg = await getNotifySettings();
-    if (!cfg.telegram.token || !cfg.telegram.chatId) {
+    if (!cfg.telegram.token || !cfg.telegram.chatIds.length) {
       return res.json({ ok: false, message: "Сначала подключите бота." });
     }
     const r = await sendTelegramMessage("✅ Проверка связи: уведомления о заявках работают.");
-    if (r.ok) return res.json({ ok: true });
+    if (r.ok) return res.json({ ok: true, count: cfg.telegram.chatIds.length });
     res.json({ ok: false, message: (r.data && r.data.description) || "Telegram не принял сообщение." });
   } catch (e) { next(e); }
 });

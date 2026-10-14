@@ -679,16 +679,27 @@
   }
 
   function renderNotifyStatus(t) {
+    var ids = (t && t.chatIds) || [];
     var el = $("#tgStatus");
     if (el) {
       if (!t || !t.configured) el.textContent = "Статус: не подключено.";
-      else if (t.enabled) el.textContent = "Статус: подключено ✓ Уведомления приходят в Telegram.";
+      else if (t.enabled) el.textContent = "Статус: подключено ✓ Получателей: " + ids.length + ".";
       else el.textContent = "Статус: подключено, но уведомления выключены.";
     }
     var toggle = $("#tgToggle");
     if (toggle) toggle.textContent = t && t.enabled ? "Выключить" : "Включить";
     var input = $("#tgToken");
     if (input && t && t.token) input.placeholder = "Подключено: " + t.token + " (введите новый, чтобы заменить)";
+
+    var box = $("#tgChats");
+    if (!box) return;
+    if (!ids.length) { box.innerHTML = ""; return; }
+    var rows = ids.map(function (id) {
+      return "<span class='tg-chat'><b>" + id + "</b>" +
+        "<button type='button' class='tg-x' data-remove-chat='" + id + "' title='Убрать'>&times;</button></span>";
+    }).join("");
+    box.innerHTML = "<div class='tg-chats-title'>Получатели заявок (" + ids.length + "):</div>" +
+      "<div class='tg-chats-list'>" + rows + "</div>";
   }
 
   async function loadNotify() {
@@ -711,7 +722,7 @@
       try {
         var r = await apiFetch("admin/notify/connect", { method: "POST", body: { token: tokenValue } });
         if (r && r.ok) {
-          tgMsg("Подключено ✓ " + (r.chatName ? "Чат: " + r.chatName : ""), true);
+          tgMsg(r.message || ("Подключено ✓ " + (r.chatName || "")), true);
           if (tokenEl) tokenEl.value = "";
         } else {
           tgMsg((r && r.message) || "Не удалось подключить");
@@ -721,6 +732,23 @@
         if (e.status === 401) return handleUnauthorized();
         tgMsg(e.message || "Не удалось подключить");
       } finally { connect.disabled = false; }
+    });
+
+    var chats = $("#tgChats");
+    if (chats) chats.addEventListener("click", async function (ev) {
+      var btn = ev.target.closest("[data-remove-chat]");
+      if (!btn) return;
+      var id = btn.getAttribute("data-remove-chat");
+      if (!window.confirm("Убрать получателя " + id + "?")) return;
+      btn.disabled = true;
+      try {
+        var r = await apiFetch("admin/notify/chats/" + encodeURIComponent(id), { method: "DELETE" });
+        renderNotifyStatus(r && r.telegram);
+        tgMsg("Получатель убран", true);
+      } catch (e) {
+        if (e.status === 401) return handleUnauthorized();
+        tgMsg(e.message || "Не удалось убрать");
+      }
     });
 
     var test = $("#tgTest");
