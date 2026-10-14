@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Панель мастера</title>
+<link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500&family=Marck+Script&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/admin.css">
+</head>
+<body>
+
+<!-- ══════════ ВХОД ДЛЯ МАСТЕРА ══════════ -->
+<div class="login-gate" id="loginGate" hidden>
+  <form class="login-box" id="loginForm" autocomplete="on">
+    <span class="login-logo">
+      <svg viewBox="0 0 64 64" width="52" height="52" aria-hidden="true">
+        <defs><linearGradient id="lg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#c6b8ec"/><stop offset="1" stop-color="#7a60bb"/></linearGradient></defs>
+        <circle cx="32" cy="32" r="30" fill="url(#lg)"/>
+        <circle cx="32" cy="32" r="24" fill="none" stroke="#a892d8" stroke-width="2" opacity=".8"/>
+        <path d="M32 16c6 0 10 5 10 13v16c0 3-4.5 3-4.5 0V29c0-5-2.4-8-5.5-8s-5.5 3-5.5 8v16c0 3-4.5 3-4.5 0V29c0-8 4-13 10-13z" fill="#fff" opacity=".95"/>
+      </svg>
+    </span>
+    <h1 class="login-title">Панель мастера</h1>
+    <p class="login-sub">Вход только для мастера</p>
+    <div class="field"><label for="loginUser">Логин</label><input id="loginUser" name="username" autocomplete="username" value="admin"></div>
+    <div class="field"><label for="loginPass">Пароль</label><input type="password" id="loginPass" name="password" autocomplete="current-password"></div>
+    <button type="submit" class="btn btn-primary btn-block" id="loginBtn">Войти</button>
+    <p class="login-msg" id="loginMsg"></p>
+    <a class="login-back" href="index.html">← Вернуться на сайт</a>
+  </form>
+</div>
+
+<header class="adm-header">
+  <div class="adm-container">
+    <div class="adm-brand">
+      <span class="adm-logo">
+        <svg viewBox="0 0 64 64" width="34" height="34" aria-hidden="true">
+          <defs><linearGradient id="al" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#c6b8ec"/><stop offset="1" stop-color="#7a60bb"/></linearGradient></defs>
+          <circle cx="32" cy="32" r="30" fill="url(#al)"/>
+          <circle cx="32" cy="32" r="24" fill="none" stroke="#a892d8" stroke-width="2" opacity=".8"/>
+          <path d="M32 16c6 0 10 5 10 13v16c0 3-4.5 3-4.5 0V29c0-5-2.4-8-5.5-8s-5.5 3-5.5 8v16c0 3-4.5 3-4.5 0V29c0-8 4-13 10-13z" fill="#fff" opacity=".95"/>
+        </svg>
+      </span>
+      <div>
+        <div class="adm-brand-name">Панель мастера</div>
+        <div class="adm-brand-sub">мои данные, цены, работы, новости</div>
+      </div>
+    </div>
+    <div class="adm-actions">
+      <span class="mode-pill" id="modePill" hidden></span>
+      <span class="save-status" id="saveStatus"></span>
+      <button class="btn btn-ghost" id="logoutBtn" type="button" hidden>Выйти</button>
+      <a class="btn btn-primary" href="index.html" target="_blank">Открыть сайт ↗</a>
+    </div>
+  </div>
+</header>
+
+<nav class="adm-tabs">
+  <div class="adm-container">
+    <button class="adm-tab active" data-tab="profile">Профиль и контакты</button>
+    <button class="adm-tab" data-tab="prices">Услуги и цены</button>
+    <button class="adm-tab" data-tab="works">Мои работы</button>
+    <button class="adm-tab" data-tab="news">Новости</button>
+    <button class="adm-tab" data-tab="bookings" id="bookingsTab" hidden>Заявки <span class="tab-badge" id="bookingsBadge" hidden></span></button>
+    <button class="adm-tab" data-tab="notify" id="notifyTab" hidden>Уведомления</button>
+    <button class="adm-tab" data-tab="publish">Публикация</button>
+  </div>
+</nav>
+
+<main class="adm-main">
+  <div class="adm-container">
+
+    <!-- ══════════ ПРОФИЛЬ ══════════ -->
+    <section class="adm-panel" id="tab-profile">
+      <div class="adm-section-title">
+        <h2>Профиль и контакты</h2>
+        <p>Эти данные показываются на сайте: название, информация о мастере, контакты и соцсети.</p>
+      </div>
+
+      <div class="adm-card">
+        <h3>Название и главный экран</h3>
+        <div class="grid2">
+          <div class="field"><label>Название / логотип</label><input id="pf-brand"></div>
+          <div class="field"><label>Подпись под названием</label><input id="pf-brandSub" placeholder="студия ногтевого сервиса"></div>
+          <div class="field"><label>Имя мастера</label><input id="pf-master"></div>
+          <div class="field"><label>Надпись над заголовком</label><input id="pf-heroEyebrow" placeholder="Маникюр и педикюр с заботой"></div>
+          <div class="field"><label>Заголовок (начало)</label><input id="pf-heroTitle" placeholder="Красивые ногти,"></div>
+          <div class="field"><label>Заголовок (выделенная часть)</label><input id="pf-heroAccent" placeholder="которым завидуют"></div>
+        </div>
+        <div class="field"><label>Текст под заголовком (рекламный блок)</label><textarea id="pf-tagline"></textarea></div>
+        <div class="field"><label>Большое фото на главном экране</label>
+          <div class="thumb-row">
+            <img class="thumb" id="pf-heroImage" alt="">
+            <div class="thumb-actions">
+              <button class="btn btn-ghost" id="pf-heroImageBtn">Выбрать фото</button>
+              <input type="file" id="pf-heroImageFile" accept="image/*" hidden>
+              <button class="btn btn-ghost danger" id="pf-heroImageRemove" hidden>Убрать</button>
+              <span class="hint">Фото по вертикали (например, 900×1100)</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="adm-card">
+        <h3>О мастере</h3>
+        <div class="grid2">
+          <div class="field"><label>Заголовок раздела</label><input id="pf-aboutTitle"></div>
+          <div class="field"><label>Фото мастера</label>
+            <div class="thumb-row">
+              <img class="thumb" id="pf-aboutImage" alt="">
+              <div class="thumb-actions">
+                <button class="btn btn-ghost" id="pf-aboutImageBtn">Выбрать фото</button>
+                <input type="file" id="pf-aboutImageFile" accept="image/*" hidden>
+                <button class="btn btn-ghost danger" id="pf-aboutImageRemove" hidden>Убрать</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="field"><label>Рассказ о себе</label><textarea id="pf-about" class="tall"></textarea></div>
+      </div>
+
+      <div class="adm-card">
+        <h3>Контактная информация</h3>
+        <div class="grid2">
+          <div class="field"><label>Город</label><input id="pf-city"></div>
+          <div class="field"><label>Адрес</label><input id="pf-address"></div>
+          <div class="field"><label>Телефон (как показывать)</label><input id="pf-phone" placeholder="+7 999 000-00-00"></div>
+          <div class="field"><label>Телефон (только цифры с +)</label><input id="pf-phoneRaw" placeholder="+79990000000"></div>
+          <div class="field"><label>Часы работы</label><input id="pf-hours" placeholder="Пн–Сб: 10:00 – 20:00"></div>
+          <div class="field"><label>Ссылка на карту (необязательно)</label><input id="pf-mapUrl" placeholder="https://yandex.ru/maps/..."></div>
+          <div class="field"><label>Telegram (ник без @)</label><input id="pf-telegram"></div>
+          <div class="field"><label>Instagram (ник без @)</label><input id="pf-instagram"></div>
+          <div class="field"><label>E-mail</label><input id="pf-email"></div>
+        </div>
+      </div>
+
+      <div class="adm-card">
+        <h3>Цифры на главном экране</h3>
+        <div id="statsEditor"></div>
+        <button class="btn btn-ghost" id="statsAdd">+ Добавить цифру</button>
+      </div>
+
+      <div class="adm-card">
+        <h3>Преимущества (блок «О мастере»)</h3>
+        <div id="featuresEditor"></div>
+        <button class="btn btn-ghost" id="featuresAdd">+ Добавить преимущество</button>
+      </div>
+    </section>
+
+    <!-- ══════════ ПРАЙС ══════════ -->
+    <section class="adm-panel" id="tab-prices" hidden>
+      <div class="adm-section-title">
+        <h2>Услуги и цены</h2>
+        <p>Одна строка — одна услуга. Категория объединяет услуги (например «Маникюр» или «Наращивание»).</p>
+      </div>
+      <div class="adm-card">
+        <div class="price-table-head">
+          <span>Категория</span><span>Название услуги</span><span>Цена</span><span>Примечание</span><span></span>
+        </div>
+        <div id="priceRows"></div>
+        <button class="btn btn-outline" id="priceAdd">+ Добавить услугу</button>
+      </div>
+    </section>
+
+    <!-- ══════════ РАБОТЫ ══════════ -->
+    <section class="adm-panel" id="tab-works" hidden>
+      <div class="adm-section-title">
+        <h2>Мои работы</h2>
+        <p>Добавляйте фото своих работ — они появятся в галерее на сайте в порядке добавления.</p>
+      </div>
+      <div class="media-grid" id="workGrid"></div>
+      <button class="btn btn-primary" id="workAdd">+ Добавить работу</button>
+    </section>
+
+    <!-- ══════════ НОВОСТИ ══════════ -->
+    <section class="adm-panel" id="tab-news" hidden>
+      <div class="adm-section-title">
+        <h2>Новости</h2>
+        <p>Акции, записи на месяц, новинки — короткие заметки для посетителей сайта.</p>
+      </div>
+      <div class="adm-card" id="newsList"></div>
+      <button class="btn btn-primary" id="newsAdd">+ Добавить новость</button>
+    </section>
+
+    <!-- ══════════ ЗАЯВКИ ══════════ -->
+    <section class="adm-panel" id="tab-bookings" hidden>
+      <div class="adm-section-title">
+        <h2>Заявки с сайта</h2>
+        <p>Заявки, оставленные через форму записи. Удалите заявку, когда обработали её.</p>
+      </div>
+      <div class="adm-card" id="bookingsList"></div>
+    </section>
+
+    <!-- ══════════ УВЕДОМЛЕНИЯ ══════════ -->
+    <section class="adm-panel" id="tab-notify" hidden>
+      <div class="adm-section-title">
+        <h2>Уведомления о заявках</h2>
+        <p>Когда клиент оставляет заявку на сайте, вам сразу приходит сообщение в Telegram — со звуком и пуш-уведомлением на телефон.</p>
+      </div>
+
+      <div class="adm-card">
+        <h3>Подключение Telegram</h3>
+        <ol class="steps">
+          <li>Откройте Telegram и найдите бота <b>@BotFather</b>.</li>
+          <li>Отправьте ему команду <code>/newbot</code> и ответьте на вопросы. В конце он пришлёт <b>токен</b> — длинную строку из цифр и букв.</li>
+          <li>Откройте вашего нового бота (ссылка вида <code>t.me/имя_бота</code>) и нажмите <b>Start</b>, затем отправьте ему любое сообщение (например, «привет»).</li>
+          <li>Скопируйте токен в поле ниже и нажмите <b>«Подключить»</b>.</li>
+        </ol>
+        <div class="field"><label>Токен бота от @BotFather</label><input id="tgToken" placeholder="123456789:AA..." autocomplete="off"></div>
+        <div class="btns">
+          <button class="btn btn-primary" id="tgConnect" type="button">Подключить</button>
+          <button class="btn btn-ghost" id="tgTest" type="button">Отправить тест</button>
+          <button class="btn btn-ghost" id="tgToggle" type="button">Выключить</button>
+        </div>
+        <p class="adm-note ok" id="tgMsg" hidden></p>
+        <p class="adm-note" id="tgStatus"></p>
+      </div>
+
+      <div class="adm-card">
+        <h3>Что придёт в сообщении</h3>
+        <p class="adm-note">Имя клиента, телефон, выбранная услуга, удобное время и комментарий. Заявки всегда хранятся во вкладке <b>«Заявки»</b>, даже если уведомления выключены.</p>
+      </div>
+    </section>
+
+    <!-- ══════════ ПУБЛИКАЦИЯ ══════════ -->
+    <section class="adm-panel" id="tab-publish" hidden>
+      <div class="adm-section-title">
+        <h2>Публикация изменений</h2>
+        <p id="publishIntro"></p>
+      </div>
+
+      <div class="adm-card online-only" hidden>
+        <h3>Сохранение на сервере</h3>
+        <p class="adm-note">Все изменения — профиль, цены, работы и новости — сохраняются на сервере автоматически и сразу видны посетителям сайта. Скачивать и перезаливать ничего не нужно.</p>
+      </div>
+
+      <div class="adm-card online-only" hidden>
+        <h3>Смена пароля</h3>
+        <div class="grid2">
+          <div class="field"><label>Новый пароль</label><input type="password" id="pwNew" autocomplete="new-password" placeholder="минимум 6 символов"></div>
+          <div class="field"><label>Повторите пароль</label><input type="password" id="pwNew2" autocomplete="new-password"></div>
+        </div>
+        <button class="btn btn-primary" id="pwSave" type="button">Сменить пароль</button>
+        <p class="adm-note" id="pwMsg"></p>
+      </div>
+
+      <div class="adm-card local-only" hidden>
+        <h3>Шаг 1. Скачайте готовый файл данных</h3>
+        <p class="adm-note">Внутри этого файла — ваши работы, цены и новости. Он заменяет данные сайта.</p>
+        <button class="btn btn-primary" id="exportBtn">Скачать файл данных (data.js)</button>
+        <span class="hint" id="exportStatus"></span>
+      </div>
+
+      <div class="adm-card local-only" hidden>
+        <h3>Шаг 2. Обновите сайт на хостинге</h3>
+        <ol class="steps">
+          <li>Замените скачанный файл <code>data.js</code> на файл в папке <code>data</code> вашего сайта (старый <code>data.js</code> удалите).</li>
+          <li>Зайдите на <b>Netlify</b> → ваш сайт → вкладка <b>Deploys</b>.</li>
+          <li>Перетащите <b>всю папку сайта</b> в зону загрузки прямо в браузере.</li>
+        </ol>
+        <p class="adm-note">Подробная инструкция — в файле <b>README.md</b> в папке сайта.</p>
+      </div>
+
+      <div class="adm-card local-only" hidden>
+        <h3>Безопасность и резервная копия</h3>
+        <div class="btns">
+          <button class="btn btn-ghost" id="importBtn">Импортировать данные из файла</button>
+          <button class="btn btn-ghost danger" id="resetAll">Сбросить все данные</button>
+        </div>
+        <input type="file" id="importFile" accept=".js,.json,application/json,text/javascript" hidden>
+        <p class="adm-note">Импорт восстанавливает данные из скачанного ранее файла (например, на другом компьютере). Сброс вернёт сайт к исходным данным и удалит все добавленные фото.</p>
+      </div>
+    </section>
+
+  </div>
+</main>
+
+<script src="data/data.js"></script>
+<script src="assets/js/store.js"></script>
+<script src="assets/js/admin.js"></script>
+</body>
+</html>

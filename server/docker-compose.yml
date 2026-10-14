@@ -1,0 +1,18 @@
+# PostgreSQL для локального запуска.
+#   docker compose up -d
+# затем в server/.env:
+#   DATABASE_URL=postgres://nail:nail@localhost:5432/nail_atelier
+services:
+  db:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: nail
+      POSTGRES_PASSWORD: nail
+      POSTGRES_DB: nail_atelier
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+volumes:
+  pgdata:

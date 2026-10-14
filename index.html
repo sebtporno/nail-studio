@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#fbfaff">
+<meta name="description" content="Маникюр, педикюр, наращивание и дизайн ногтей. Портфолио работ, актуальный прайс и новости мастера.">
+<title>Nail Atelier — студия ногтевого сервиса</title>
+<link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Marck+Script&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/styles.css">
+</head>
+<body>
+
+<!-- ======= ШАПКА ======= -->
+<header class="site-header" id="header">
+  <div class="container header-inner">
+    <a class="brand" href="#hero">
+      <span class="brand-mark">
+        <svg viewBox="0 0 64 64" width="40" height="40" aria-hidden="true">
+          <defs><linearGradient id="bm" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#c6b8ec"/><stop offset="1" stop-color="#7a60bb"/></linearGradient></defs>
+          <circle cx="32" cy="32" r="30" fill="url(#bm)"/>
+          <circle cx="32" cy="32" r="24" fill="none" stroke="#a892d8" stroke-width="2" opacity=".8"/>
+          <path d="M32 16c6 0 10 5 10 13v16c0 3-4.5 3-4.5 0V29c0-5-2.4-8-5.5-8s-5.5 3-5.5 8v16c0 3-4.5 3-4.5 0V29c0-8 4-13 10-13z" fill="#fff" opacity=".95"/>
+        </svg>
+      </span>
+      <span class="brand-text">
+        <span class="brand-name" id="brandName">Nail Atelier</span>
+        <span class="brand-sub" id="brandSub">студия ногтевого сервиса</span>
+      </span>
+    </a>
+
+    <nav class="nav" aria-label="Основная навигация">
+      <a href="#hero" class="active">Главная</a>
+      <a href="#about">Обо мне</a>
+      <a href="#prices">Услуги и цены</a>
+      <a href="#works">Работы</a>
+      <a href="#news">Новости</a>
+      <a href="#contacts">Контакты</a>
+    </nav>
+
+    <a class="btn btn-primary header-cta" href="#contacts">Записаться</a>
+
+    <button class="burger" id="burger" aria-label="Меню" aria-expanded="false" aria-controls="mobileNav">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<nav class="mobile-nav" id="mobileNav" aria-label="Мобильная навигация">
+  <a href="#hero">Главная</a>
+  <a href="#about">Обо мне</a>
+  <a href="#prices">Услуги и цены</a>
+  <a href="#works">Работы</a>
+  <a href="#news">Новости</a>
+  <a href="#contacts">Контакты</a>
+  <a class="btn btn-primary btn-block" href="#contacts">Записаться</a>
+</nav>
+
+<main>
+
+  <!-- ======= ГЛАВНАЯ ======= -->
+  <section class="hero" id="hero">
+    <div class="container hero-grid">
+      <div class="hero-copy">
+        <span class="eyebrow" id="heroEyebrow">Маникюр и педикюр с заботой</span>
+        <h1 id="heroTitle">Красивые ногти, <em>которым завидуют</em></h1>
+        <p class="hero-tagline" id="heroTagline"></p>
+        <div class="hero-actions">
+          <a class="btn btn-primary btn-lg" href="#contacts">Записаться онлайн</a>
+          <a class="btn btn-outline btn-lg" href="#works">Смотреть работы</a>
+        </div>
+        <div class="hero-badges" id="heroStats"></div>
+      </div>
+      <div class="hero-media">
+        <div class="hero-photo">
+          <img id="heroImage" class="img-loading" alt="Атмосфера салона">
+        </div>
+        <div class="hero-float hero-float-1">
+          <span class="dot">★</span>
+          <div><b>Только стерильно</b><span>обработка инструментов</span></div>
+        </div>
+        <div class="hero-float hero-float-2">
+          <span class="dot">♥</span>
+          <div><b>Довольные клиенты</b><span>возвращаются снова</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======= ОБО МНЕ ======= -->
+  <section class="section tint" id="about">
+    <div class="container about-grid">
+      <div class="about-photo reveal">
+        <img id="aboutImage" class="img-loading" alt="Мастер">
+        <span class="about-frame"></span>
+      </div>
+      <div class="about-text">
+        <span class="eyebrow">Знакомство</span>
+        <h2 id="aboutTitle">Обо мне</h2>
+        <p class="lead" id="aboutText"></p>
+        <div class="about-features" id="aboutFeatures"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======= УСЛУГИ И ЦЕНЫ ======= -->
+  <section class="section" id="prices">
+    <div class="container">
+      <div class="section-head reveal">
+        <span class="eyebrow" style="justify-content:center">Прайс-лист</span>
+        <h2>Услуги и цены</h2>
+        <p>Прозрачные цены без сюрпризов. Точную стоимость дизайна подскажу на приёме.</p>
+        <span class="divider"><i></i><svg class="divider-orn" viewBox="0 0 160 24" width="150" height="24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true"><path d="M4 12 C 20 12 22 5 36 5 C 48 5 56 12 70 12"/><path d="M156 12 C 140 12 138 5 124 5 C 112 5 104 12 90 12"/><path d="M80 6.5 L 87 12 L 80 17.5 L 73 12 Z" fill="currentColor" stroke="none"/></svg><i></i></span>
+      </div>
+      <div class="price-tabs" id="priceTabs"></div>
+      <div class="price-cards" id="priceCards"></div>
+      <p class="price-hint" id="priceHint">Цены указаны за процедуру. Итоговая стоимость может зависеть от состояния ногтей и выбранного дизайна.</p>
+    </div>
+  </section>
+
+  <!-- ======= РАБОТЫ ======= -->
+  <section class="section tint" id="works">
+    <div class="container">
+      <div class="section-head reveal">
+        <span class="eyebrow" style="justify-content:center">Портфолио</span>
+        <h2>Мои работы</h2>
+        <p>Нажмите на фото, чтобы рассмотреть поближе.</p>
+        <span class="divider"><i></i><svg class="divider-orn" viewBox="0 0 160 24" width="150" height="24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true"><path d="M4 12 C 20 12 22 5 36 5 C 48 5 56 12 70 12"/><path d="M156 12 C 140 12 138 5 124 5 C 112 5 104 12 90 12"/><path d="M80 6.5 L 87 12 L 80 17.5 L 73 12 Z" fill="currentColor" stroke="none"/></svg><i></i></span>
+      </div>
+      <div class="gallery-filters" id="galleryFilters"></div>
+      <div class="gallery" id="worksGrid"></div>
+    </div>
+  </section>
+
+  <!-- ======= НОВОСТИ ======= -->
+  <section class="section" id="news">
+    <div class="container">
+      <div class="section-head reveal">
+        <span class="eyebrow" style="justify-content:center">Актуальное</span>
+        <h2>Новости</h2>
+        <p>Запись, акции и новинки — всё самое важное.</p>
+        <span class="divider"><i></i><svg class="divider-orn" viewBox="0 0 160 24" width="150" height="24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true"><path d="M4 12 C 20 12 22 5 36 5 C 48 5 56 12 70 12"/><path d="M156 12 C 140 12 138 5 124 5 C 112 5 104 12 90 12"/><path d="M80 6.5 L 87 12 L 80 17.5 L 73 12 Z" fill="currentColor" stroke="none"/></svg><i></i></span>
+      </div>
+      <div class="news-grid" id="newsGrid"></div>
+    </div>
+  </section>
+
+  <!-- ======= КОНТАКТЫ ======= -->
+  <section class="section tint" id="contacts">
+    <div class="container">
+      <div class="section-head reveal">
+        <span class="eyebrow" style="justify-content:center">На связи</span>
+        <h2>Контакты и запись</h2>
+        <p>Напишите в удобный мессенджер или оставьте заявку — я перезвоню.</p>
+        <span class="divider"><i></i><svg class="divider-orn" viewBox="0 0 160 24" width="150" height="24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true"><path d="M4 12 C 20 12 22 5 36 5 C 48 5 56 12 70 12"/><path d="M156 12 C 140 12 138 5 124 5 C 112 5 104 12 90 12"/><path d="M80 6.5 L 87 12 L 80 17.5 L 73 12 Z" fill="currentColor" stroke="none"/></svg><i></i></span>
+      </div>
+
+      <div class="contacts-grid">
+        <div class="reveal">
+          <div class="contact-list" id="contactList"></div>
+          <div class="socials" id="socials"></div>
+          <a class="btn btn-ghost" id="mapBtn" href="#" target="_blank" rel="noopener" style="margin-top:22px;display:none">Открыть на карте</a>
+        </div>
+
+        <div class="book-card reveal">
+          <h3>Записаться на процедуру</h3>
+          <p class="sub">Заполните форму — заявка уйдёт мастеру в мессенджер.</p>
+          <form id="bookingForm" novalidate>
+            <div class="field">
+              <label for="bookingName">Ваше имя</label>
+              <input type="text" id="bookingName" placeholder="Например, Мария" autocomplete="name">
+            </div>
+            <div class="field">
+              <label for="bookingPhone">Телефон</label>
+              <input type="tel" id="bookingPhone" placeholder="+7 999 000-00-00" autocomplete="tel">
+            </div>
+            <div class="field">
+              <label for="bookingService">Услуга</label>
+              <select id="bookingService"></select>
+            </div>
+            <div class="field">
+              <label for="bookingDate">Удобные дата и время</label>
+              <input type="text" id="bookingDate" placeholder="Например, суббота после 15:00">
+            </div>
+            <div class="field">
+              <label for="bookingMsg">Комментарий (необязательно)</label>
+              <textarea id="bookingMsg" placeholder="Пожелания по дизайну, форма и т.д."></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary btn-block btn-lg">Отправить заявку</button>
+            <p class="form-note" id="bookingStatus">Нажимая кнопку, вы соглашаетесь на обработку данных для связи.</p>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- ======= ПОДВАЛ ======= -->
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-brand">
+          <span class="brand-mark">
+            <svg viewBox="0 0 64 64" width="40" height="40" aria-hidden="true">
+              <defs><linearGradient id="bmf" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#c6b8ec"/><stop offset="1" stop-color="#7a60bb"/></linearGradient></defs>
+              <circle cx="32" cy="32" r="30" fill="url(#bmf)"/>
+              <circle cx="32" cy="32" r="24" fill="none" stroke="#a892d8" stroke-width="2" opacity=".8"/>
+              <path d="M32 16c6 0 10 5 10 13v16c0 3-4.5 3-4.5 0V29c0-5-2.4-8-5.5-8s-5.5 3-5.5 8v16c0 3-4.5 3-4.5 0V29c0-8 4-13 10-13z" fill="#fff" opacity=".95"/>
+            </svg>
+          </span>
+          <span class="brand-text">
+            <span class="brand-name" id="footerBrandName">Nail Atelier</span>
+            <span class="brand-sub" id="footerBrandSub">студия ногтевого сервиса</span>
+          </span>
+        </div>
+        <p class="footer-about" id="footerAbout"></p>
+      </div>
+      <div>
+        <h4>Разделы</h4>
+        <div class="footer-links">
+          <a href="#about">Обо мне</a>
+          <a href="#prices">Услуги и цены</a>
+          <a href="#works">Работы</a>
+          <a href="#news">Новости</a>
+          <a href="#contacts">Контакты</a>
+        </div>
+      </div>
+      <div>
+        <h4>Запись</h4>
+        <div class="footer-links">
+          <a href="#contacts">Оставить заявку</a>
+          <a href="#" id="footerAdminLink" hidden>Панель мастера</a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© <span id="year">2026</span> Nail Atelier. Все права защищены.</span>
+      <a class="footer-admin" href="admin.html">Вход для мастера</a>
+    </div>
+  </div>
+</footer>
+
+<!-- ======= ЛАЙТБОКС ======= -->
+<div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Просмотр работы">
+  <button class="lb-btn lb-close" id="lbClose" aria-label="Закрыть">✕</button>
+  <button class="lb-btn lb-prev" id="lbPrev" aria-label="Предыдущая">‹</button>
+  <img class="lightbox-img" id="lbImg" alt="" hidden>
+  <button class="lb-btn lb-next" id="lbNext" aria-label="Следующая">›</button>
+  <div class="lightbox-cap"><b id="lbTitle"></b><span id="lbCat"></span></div>
+</div>
+
+<a class="btn btn-primary mobile-book" href="#contacts">Записаться онлайн</a>
+
+<script src="data/data.js"></script>
+<script src="assets/js/store.js"></script>
+<script src="assets/js/app.js"></script>
+</body>
+</html>

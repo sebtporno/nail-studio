@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 1000" width="800" height="1000" role="img" aria-label="Работа 1">
+  <defs>
+    <linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#f0e9fc"/><stop offset="1" stop-color="#9a7fd0"/></linearGradient>
+    <radialGradient id="r" cx="30%" cy="18%" r="85%"><stop offset="0" stop-color="#fff" stop-opacity=".85"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></radialGradient>
+    <linearGradient id="n" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff"/><stop offset="1" stop-color="#9a7fd0"/></linearGradient>
+  </defs>
+  <rect width="800" height="1000" fill="url(#g)"/><rect width="800" height="1000" fill="url(#r)"/>
+  <circle cx="640" cy="220" r="120" fill="none" stroke="#a892d8" stroke-width="3" opacity=".55"/>
+  <path d="M130 320 Q400 180 670 330" fill="none" stroke="#fff" stroke-width="7" opacity=".55" stroke-linecap="round"/>
+  <g><rect x="265" y="580" width="90" height="290" rx="45" fill="url(#n)"/><rect x="355" y="550" width="90" height="320" rx="45" fill="url(#n)"/><rect x="445" y="580" width="90" height="290" rx="45" fill="url(#n)"/>
+  <ellipse cx="310" cy="650" rx="18" ry="40" fill="#fff" opacity=".55"/><ellipse cx="400" cy="620" rx="18" ry="44" fill="#fff" opacity=".6"/><ellipse cx="490" cy="650" rx="18" ry="40" fill="#fff" opacity=".55"/></g>
+  <text x="400" y="945" text-anchor="middle" font-family="Georgia, serif" font-size="32" fill="#6f54b0" opacity=".75">Работа 1</text>
+</svg>

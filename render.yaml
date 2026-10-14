@@ -1,0 +1,34 @@
+# Автонастройка хостинга Render (бесплатный план).
+# Подробная инструкция — в файле DEPLOY.md.
+services:
+  - type: web
+    name: nail-studio
+    runtime: node
+    plan: free
+    region: frankfurt
+    rootDir: server
+    buildCommand: npm install
+    startCommand: npm start
+    healthCheckPath: /api/health
+    autoDeploy: true
+    envVars:
+      - key: NODE_VERSION
+        value: "20"
+      # Логин мастера (пароль задаётся в панели Render, вручную)
+      - key: ADMIN_USER
+        value: admin
+      - key: ADMIN_PASSWORD
+        sync: false
+      # Секрет для входа — генерируется автоматически
+      - key: JWT_SECRET
+        generateValue: true
+      # Строка подключения к базе (Neon) — вставляется вручную
+      - key: DATABASE_URL
+        sync: false
+      - key: PGSSL
+        value: "true"
+      # Уведомления в Telegram — вставляются вручную
+      - key: TELEGRAM_BOT_TOKEN
+        sync: false
+      - key: TELEGRAM_CHAT_ID
+        sync: false
